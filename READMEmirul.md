@@ -1,1 +1,0 @@
-# internship-application-system
