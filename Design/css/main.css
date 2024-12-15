@@ -336,7 +336,6 @@ body
     padding-bottom: 32px;
 }
 
-
 .login .txt1
 {
     font-size: 13px;
@@ -356,8 +355,6 @@ body
 
 
 /** END ADMIN LOGIN PAGE STYLE ****/
-
-
 
 
 
@@ -460,59 +457,6 @@ body
 {
     color: #f0ad4e;
 }
-
-.tab button 
-{
-    background: inherit;
-    color: #ffffff9c;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-    border-bottom: 4px solid transparent;
-}
-
-/* Change background color of buttons on hover */
-
-.tab button:hover 
-{
-    color: #fff;
-}
-
-/* Create an active/current tablink class */
-
-.tab button.active 
-{
-    color: #fff;
-    border-bottom: 4px solid #ffd943;
-}
-
-.tab
-{
-    padding: 0px;
-    background: #06adef;
-    border: 0px;
-}
-
-/* Style the tab content */
-
-.tabcontent_orders, .tabcontent_reservations
-{
-    display: none;
-}
-
-/* Three buttons (Edit, Delete, View) */
-
-.list-inline
-{
-    display: flex;
-}
-
-
-
 /** END DASHBOARD STYLE ***/
 
 

@@ -2,7 +2,8 @@
 // Start session
 session_start();
 
-$pageTitle = 'Applicants';
+// Set page title
+$pageTitle = 'Departments';
 
 // PHP INCLUDES
 include 'dbconn.php';
@@ -14,104 +15,89 @@ include 'header.php';
 if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     include 'navbar.php';
 
-    $sql = "SELECT * FROM applicant";
+    $sql = "SELECT * FROM department";
     $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
     $row = mysqli_num_rows($query);
-
     $result = $dbconn->query($sql);
     if ($row == 0) {
         echo "No record found";
     } else {
-        // Search bar and Application Details title
         echo '<div class="search-container">
-                <div class="center-text">APPLICANTS DETAILS INFORMATION</div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..." id="searchInput" onkeyup="searchTable()">
-                </div>
+                    <div class="center-text">DEPARTMENTS DETAILS INFORMATION</div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search..." id="searchInput" onkeyup="searchTable()">
+                    </div>
               </div>';
 
-        // Table for displaying applicant details
-        echo "<table id='applicantTable'>";
+        echo "<table id='departmentTable'>";
         echo "<tr>";
         echo "<th>No</th>";
         echo "<th>Name</th>";
-        echo "<th>Email</th>";
-        echo "<th>Program</th>";
-        echo "<th>University</th>";
-        echo "<th>Start </th>";
-        echo "<th>End</th>";
-        echo "<th> Status</th>";
+        echo "<th>Description</th>";
+        echo "<th>Image</th>";
+        echo "<th>Options</th>";
         echo "</tr>";
 
         while ($row = mysqli_fetch_array($query)) {
             echo "<tr>";
-            echo "<td>" . $row["applicant_id"] . "</td>";
-            echo "<td>" . $row["applicant_name"] . "</td>";
-            echo "<td>" . $row["applicant_email"] . "</td>";
-            echo "<td>" . $row["program_id"] . "</td>";
-            echo "<td>" . $row["uni_id"] . "</td>";
-            echo "<td>" . $row["applicant_start"] . "</td>";
-            echo "<td>" . $row["applicant_end"] . "</td>";
+            echo "<td>".$row["department_id"]."</td>";
+            echo "<td>".$row["department_name"]."</td>";
+            echo "<td>".$row["department_desc"]."</td>";
+            echo "<td><img src='".$row["department_image"]."' alt='Image' style='width: 100px; height: 100px; object-fit: cover;'></td>";
             echo "<td class='center-td'>
-                <a href='applicant.php?applicant_id=" . $row["applicant_id"] . "' class='edit-btn'>
-                    <i class='fas fa-eye'></i>
+                <a href='departmentUpdate.php?department_id=" . $row["department_id"] . "' class='edit-btn'>
+                    <i class='fas fa-edit'></i>
                 </a>
                 </td>";
             echo "</tr>";
         }
         echo "</table>";
-
         echo "<br>";
         echo "<div style='width: 80%; margin: 0 auto; text-align: right;'>";
-        echo "<button class='oval-button' onclick=\"window.location.href='dashboard.php'\">Close</button>";
+        echo "<button class='oval-button'> <a href='departmentAdd.php' style='color:#fff;'>+ Add</a></button>";  
+        echo "<button class='oval-button'  > <a href='dashboard.php' style='color:#fff;'>Close</a></button>"; 
         echo "</div>";
     }
+
     $dbconn->close();
-} else {
-    header('Location: login.php');
-    exit();
-}
 ?>
 
-<!-- Style for the page -->
+<!-- Additional CSS for the page -->
 <style>
+
     .search-container {
         display: flex;
-        justify-content: space-between; /* Aligns the elements */
-        align-items: center; /* Vertically centers the elements */
-        margin-bottom: 20px; /* Space below the search bar and text */
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
     }
 
     .center-text {
         font-size: 24px;
         font-weight: bold;
         color: #333;
-        text-align: center; /* Ensures it's centered */
-        flex-grow: 1; /* Ensures the text takes as much space as possible */
+        text-align: center;
+        flex-grow: 1;
+        margin-top: 70px;
     }
 
     .search-bar input {
-        padding: 4px 8px;  /* Reduced padding to make the search bar smaller */
+        padding: 4px 8px;
         font-size: 14px;
-        width: 150px; /* Adjust width for small search bar */
+        width: 150px;
         border-radius: 4px;
         border: 1px solid #ddd;
-        margin-left: 10px; /* Space between text and search bar */
-        height: 30px; /* Reduced height */
+        margin-left: 10px;
+        height: 30px;
     }
 
     .search-bar input:focus {
         outline: none;
-        border-color: #153448; /* Border color when focused */
-    }
-    #content {
-    margin-left: 200px; /* Match sidebar width */
-    padding-top: 70px;  /* Space for navbar */
-    width: calc(100% - 250px); /* Ensure content fits the remaining space */    
+        border-color: #4CAF50;
     }
 
     table {
-        width: 100%;
+        width: 96%;
         border-collapse: collapse;
         margin: 20px 0;
         background-color: #fff;
@@ -150,32 +136,70 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     }
 
     .oval-button {
-            padding: 10px 20px;
-            background-color: #153448;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .oval-button:hover {
-            background-color: #59C1BD;
-        }
+        padding: 10px 20px;
+        background-color: #153448;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .oval-button:hover {
+        background-color: #59C1BD;
+    }
+
+    .oval-button a {
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Center the button in the table cell */
+    .center-td {
+        text-align: center;
+    }
+
+    /* Style for the edit button */
+    .edit-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 30px;
+        color: #06adef;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .edit-btn:hover {
+        color: #153448;
+    }
+
+    .edit-btn i {
+        font-size: 16px;
+    }
 </style>
 
-<!-- JavaScript to filter table rows based on search input -->
+<!-- Add Font Awesome for the Edit icon -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<?php
+} else {
+    header('Location: login.php');
+    exit();
+}
+?>
+
+<!-- JavaScript for search functionality -->
 <script>
     function searchTable() {
         let input = document.getElementById("searchInput");
         let filter = input.value.toLowerCase();
-        let table = document.getElementById("applicantTable");
+        let table = document.getElementById("departmentTable");
         let tr = table.getElementsByTagName("tr");
 
-        for (let i = 1; i < tr.length; i++) { // Skip the header row
+        for (let i = 1; i < tr.length; i++) {
             let td = tr[i].getElementsByTagName("td");
             let found = false;
 
-            // Loop through each column to search for the term
             for (let j = 0; j < td.length; j++) {
                 if (td[j]) {
                     let txtValue = td[j].textContent || td[j].innerText;

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $usernameDB = "root";
     $passwordDB = "";
-    $dbname = "intern_app";
+    $dbname = "interndb";
 
     $dbconn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
 
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
         }
         header {
             position: fixed;
@@ -98,19 +98,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             left: 0;
             right: 0;
             background: #fff;
-            padding: 0.5rem 9%;
+            padding: 1.3rem 9%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
             box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
         }
+        header .navbar {
+            display: flex;
+            gap: 2rem;
+        }
         header .logo img {
             font-size: 3rem;
             color: black;
             font-weight: bolder;
-            width: 20%;
-            height: 15%;
+            width: 75%;
+            height: 45%;
         }
         header .navbar a {
             font-family: 'Verdana', 'Roboto';
@@ -277,5 +281,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
     </section>
+</div>
 </body>
 </html>

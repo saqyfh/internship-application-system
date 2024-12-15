@@ -18,34 +18,16 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     z-index: 1002;
-    background: #fff;
+    background: #112a3b;
     min-height: 30px!important; /* Reduced height */
     padding: 10px !important; /* Reduced padding */
     box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
 }
 
-.nav-item-button
-{
-    padding: 10px;
-    line-height: 1;display: block;
-    border: 1px solid #f0f0f8;
-    background-color: #fff;
-    text-decoration: none;
-    border-radius: 3px;
-    color: #66686d;
-}
-
-.dropdown .nav-item-button:hover,.dropdown .nav-item-button:focus
-{
-    color: white;
-    background-color: #06adef !important;
-    border-color: #06adef !important;
-}
-
 .navbar-brand 
 {
     font-family: inherit;
-    color: #323f52;
+    color: #fff;
     height: inherit;
     padding: 0px;
     line-height: 1px;
@@ -53,21 +35,12 @@
     font-size: 20px;
 }
 
-.sidenav-menu-heading
-{
-    padding: 1.25rem 1rem 0.75rem;
-    font-size: 0.7rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-    color: #a2acba;
-}
-
 .active_link 
 {
     text-decoration: none;
-    background: #06adef;
+    background: #59C1BD;
     color: #fff !important;
+    border-radius: 30px;
 }
 
 .active_link i
@@ -85,8 +58,8 @@
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover 
 {
-    background-color: #06adef;
-    border-color: #06adef;
+    background-color: #59C1BD;
+    border-color: #59C1BD;
 }
 
 .sub
@@ -109,7 +82,7 @@
     float: left;
     height: 100%;
     position: fixed;
-    background: #fff;
+    background: #153448;
     top: 0;
     bottom: 0;
     z-index: 300;
@@ -137,7 +110,7 @@
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     position: relative;
-    color: #1f2d41;
+    color: #fff;
     padding: 0.75rem 1rem;
     transition: 0.3s;
 }
@@ -151,7 +124,7 @@
     background: none;
     margin: 0;
     padding: 0;
-    color: #a2acba;
+    color: #fff;
     font-weight: 900;
     display: block;
 }
@@ -172,8 +145,8 @@
 {
     font-weight: 700;
     color: #fff;
-    background: #26dd7d;
-    border: 1px solid #26dd7d;
+    background: #59C1BD;
+    border: 1px solid #153448;
 }
 
 .top-nav .top-menu .main-li 
@@ -185,8 +158,9 @@
 .a-verMenu:hover 
 {
     text-decoration: none;
-    background: #06adef;
+    background: #59C1BD;
     color: #fff;
+    border-radius: 50px;
 }
 
 .a-verMenu:hover i 
@@ -201,7 +175,7 @@
     justify-content: center;
     width: 30px;
     height: 30px;
-    color: black;
+    color: #fff;
     background: none;
     border: none;
     outline: none;
@@ -252,8 +226,16 @@
     color: #06adef;
 }
 
+.sidenav-menu-heading {
+    margin-bottom: 5px; /* Adjust to increase the spacing */
+    font-size: 10px;
+    color: #e3e1e1;
+    padding: 25px 20px; /* Adjust padding if needed */
+}
 
-
+.dashboard_link {
+    margin-top: -10; /* Increase spacing from the heading above */
+}
 /**** END ADMIN NAVBAR  ***/
 </style> 
     
@@ -276,7 +258,7 @@
                     </button> 
                 </li>
                 <li class="main-li webpage-btn">
-                    <a class="nav-item-button " href="position.php" target="_blank">
+                    <a class="nav-item-button " href="department.php" target="_blank">
                         <i class="fas fa-eye"></i>
                         <span>View website</span>
                     </a>
@@ -293,18 +275,13 @@
                 <div class="sidenav-menu-heading">
                     Core
                 </div>
-                <div class="dropdown-divider"></div>
-                <li>
                     <a href="dashboard.php" class="a-verMenu dashboard_link">
-                        <i class="fas fa-tachometer-alt icon-ver"></i>
+                        <i class="fas fa-chart-bar icon-ver"></i>
                         <span style="padding-left:6px;">Dashboard</span>
                     </a>
-                </li>
-                <div class="dropdown-divider"></div>
                 <div class="sidenav-menu-heading">
                     Menus
                 </div>
-                <div class="dropdown-divider"></div>
                 <li>
                     <a href="applicationView.php" class="a-verMenu content_categories_link">
                         <i class="fas fa-list icon-ver"></i>
@@ -314,23 +291,25 @@
                         <i class="far fa-address-card icon-ver"></i>
                         <span style="padding-left:6px;">Applicants</span>   
                      </a>
-                    <a href="positionView.php" class="a-verMenu positions_link">
-                        <i class="far fa-user icon-ver"></i>
+                    <a href="departmentView.php" class="a-verMenu department_link">
+                        <i class="fas fa-building icon-ver"></i>
                         <span style="padding-left:6px;">Departments</span>
                     </a>
+                    <a href="reportView.php" class="a-verMenu report_link">
+                        <i class="fas fa-file-alt icon-ver"></i>
+                        <span style="padding-left:6px;">Reports</span>
+                    </a>
                 </li>
-
-                <div class="dropdown-divider"></div>
                 <br><br>
                 <li>
-                    <a href="viewAdminDetailsInfo.php" class="a-verMenu admin_link">
-                        <i class="far fa-user icon-ver"></i>
+                    <a href="adminView.php" class="a-verMenu admin_link">
+                        <i class="fas fa-cog icon-ver"></i>
                         <span style="padding-left:6px;">Settings</span>
                     </a>
                 </li>
                 <li>
-                    <a href="viewAdminDetailsInfo.php" class="a-verMenu admin_link">
-                        <i class="far fa-user icon-ver"></i>
+                    <a href="logout.php" class="a-verMenu logout_link">
+                        <i class="fas fa-sign-out-alt icon-ver"></i>
                         <span style="padding-left:6px;">Logout</span>
                     </a>
                 </li>

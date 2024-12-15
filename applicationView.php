@@ -2,7 +2,7 @@
 // Start session
 session_start();
 
-$pageTitle = 'Applicants';
+$pageTitle = 'Applications';
 
 // PHP INCLUDES
 include 'dbconn.php';
@@ -14,18 +14,18 @@ include 'header.php';
 if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     include 'navbar.php';
 
-    // Join application with applicant and position tables to fetch their names
+    // Join application with applicant and department tables to fetch their names
     $sql = "
     SELECT 
         a.app_id, 
         ap.applicant_name, 
-        p.position_name, 
+        d.department_name, 
         a.app_date, 
         a.app_status
     FROM 
         application a
     JOIN applicant ap ON a.applicant_id = ap.applicant_id
-    JOIN position p ON a.position_id = p.position_id
+    JOIN department d ON a.department_id = d.department_id
     ";
 
     
@@ -58,7 +58,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
             echo "<tr>";
             echo "<td>" . $row["app_id"] . "</td>";
             echo "<td>" . $row["applicant_name"] . "</td>";
-            echo "<td>" . $row["position_name"] . "</td>";
+            echo "<td>" . $row["department_name"] . "</td>";
             echo "<td>" . $row["app_date"] . "</td>";
             echo "<td>" . $row["app_status"] . "</td>";
             echo "</tr>";
@@ -108,7 +108,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
 
     .search-bar input:focus {
         outline: none;
-        border-color: #4CAF50;
+        border-color: #153448;
     }
 
     table {
@@ -126,7 +126,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     }
 
     th {
-        background-color: #4CAF50;
+        background-color: #153448;
         color: white;
         text-transform: uppercase;
         font-size: 14px;
@@ -146,8 +146,22 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     }
 
     td:last-child {
-        color: #4CAF50;
+        color: #153448;
         font-weight: bold;
+    }
+
+    .oval-button {
+            padding: 10px 20px;
+            background-color: #153448;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+    }
+        
+    .oval-button:hover {
+            background-color: #59C1BD;
     }
 </style>
 

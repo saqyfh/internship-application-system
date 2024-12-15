@@ -109,11 +109,11 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <div>
                             <?php
                             include("dbconn.php");
-                            $sql = "SELECT * FROM position";
+                            $sql = "SELECT * FROM department";
                             $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
                             $row = mysqli_num_rows($query);
 
-                            $sql = "SELECT COUNT(position_id) FROM position";
+                            $sql = "SELECT COUNT(department_id) FROM department";
                             $result = mysqli_query($dbconn,$sql);
                             $row = mysqli_fetch_array($result);
                             echo $row[0];
@@ -122,7 +122,7 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                     </div>
                 </div>
             </div>
-            <a href="positionView.php">
+            <a href="departmentView.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -143,11 +143,11 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <div>
                             <?php
                             include("dbconn.php");
-                            $sql = "SELECT * FROM position";
+                            $sql = "SELECT * FROM department";
                             $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
                             $row = mysqli_num_rows($query);
 
-                            $sql = "SELECT COUNT(position_id) FROM position";
+                            $sql = "SELECT COUNT(department_id) FROM department";
                             $result = mysqli_query($dbconn,$sql);
                             $row = mysqli_fetch_array($result);
                             echo $row[0];
@@ -177,11 +177,11 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <div>
                             <?php
                             include("dbconn.php");
-                            $sql = "SELECT * FROM position";
+                            $sql = "SELECT * FROM department";
                             $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
                             $row = mysqli_num_rows($query);
 
-                            $sql = "SELECT COUNT(position_id) FROM position";
+                            $sql = "SELECT COUNT(department_id) FROM department";
                             $result = mysqli_query($dbconn,$sql);
                             $row = mysqli_fetch_array($result);
                             echo $row[0];
@@ -261,7 +261,7 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                 datasets: [{
                     label: 'Applications Status',
                     data: <?php echo $dataJSON; ?>,
-                    backgroundColor: ['#FFCC00', '#28A745', '#DC3545'],
+                    backgroundColor: ['#0072B2', '#009E73', '#E69F00'],
                     hoverOffset: 4
                 }]
             },
@@ -280,6 +280,7 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
     </script>
 
     <style>
+
         .dashboard-container {
             width: 35%;
             height: auto;
