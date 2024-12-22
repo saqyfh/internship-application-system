@@ -57,7 +57,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
         while ($row = mysqli_fetch_array($query)) {
             if ($row["app_status"] == "Approved" && isCurrentMonth($row['app_date'])) {
                 echo "<tr>
-                        <td>{$row['app_id']}</td>
+                        <td class='text-center'>" . count_id() . "</td>
                         <td>{$row['applicant_name']}</td>
                         <td>{$row['department_name']}</td>
                         <td>{$row['app_date']}</td>

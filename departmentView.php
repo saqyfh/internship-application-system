@@ -15,7 +15,7 @@ include 'header.php';
 if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
     include 'navbar.php';
 
-    $sql = "SELECT * FROM department";
+    $sql = "SELECT * FROM department WHERE deleted = 0";
     $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
     $row = mysqli_num_rows($query);
     $result = $dbconn->query($sql);
@@ -47,6 +47,9 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
             echo "<td class='center-td'>
                 <a href='departmentUpdate.php?department_id=" . $row["department_id"] . "' class='edit-btn'>
                     <i class='fas fa-edit'></i>
+                </a>
+                <a href='departmentDelete.php?department_id=" . $row["department_id"] . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this department?\");'>
+                    <i class='fas fa-trash'></i>
                 </a>
                 </td>";
             echo "</tr>";

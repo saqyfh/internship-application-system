@@ -66,7 +66,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
 
         foreach ($filteredApplicants as $index => $applicant) {
             echo "<tr>";
-            echo "<td>" . ($index + 1) . "</td>";
+            echo "<td class='text-center'>" . count_id() . "</td>";
             echo "<td>" . $applicant["applicant_name"] . "</td>";
             echo "<td>" . $applicant["applicant_email"] . "</td>";
             echo "<td>" . $applicant["program_id"] . "</td>";

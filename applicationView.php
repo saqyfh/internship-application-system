@@ -56,7 +56,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['user_role'] === 'admin') {
         // Loop through each record and display the results
         while ($row = mysqli_fetch_array($query)) {
             echo "<tr>";
-            echo "<td>" . $row["app_id"] . "</td>";
+            echo "<td class='text-center'>" . count_id() . "</td>";
             echo "<td>" . $row["applicant_name"] . "</td>";
             echo "<td>" . $row["department_name"] . "</td>";
             echo "<td>" . $row["app_date"] . "</td>";
