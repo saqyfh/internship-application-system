@@ -57,5 +57,45 @@ function checkItem($select, $from, $value)
       	return $data;
   	}
 
+	  date_default_timezone_set('Asia/Kuala_Lumpur');
+	  
+	  /*--------------------------------------------------------------*/
+	  /* Function for Readable date time
+	  /*--------------------------------------------------------------*/
+	  
+	function read_date($str){
+		if($str)
+		 return date('F j, Y, g:i:s a', strtotime($str));
+		else
+		 return null;
+		}
+	  
+	  /*--------------------------------------------------------------*/
+	  /* Function for  Readable Make date time
+	  /*--------------------------------------------------------------*/
+	function make_date(){
+		return strftime("%Y-%m-%d %H:%M:%S", time());
+	  }
+	  
+	  /*--------------------------------------------------------------*/
+	  /* Function for  Readable date time
+	  /*--------------------------------------------------------------*/
+	function count_id(){
+		static $count = 1;
+		return $count++;
+	  }
+/*--------------------------------------------------------------*/
+/* Function to check if a date is in the current month
+/*--------------------------------------------------------------*/
+	function isCurrentMonth($date) {
+    	$currentMonth = date('m');
+    	$currentYear = date('Y');
+    	$appDate = strtotime($date);
+    	$appMonth = date('m', $appDate);
+    	$appYear = date('Y', $appDate);
+
+    	return ($appMonth == $currentMonth && $appYear == $currentYear);
+}
+
 ?>
 

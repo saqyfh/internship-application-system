@@ -132,7 +132,7 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
         </div>
     </div>
     <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-yellow">
+        <div class="panel panel-red">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-sm-3">
@@ -143,12 +143,16 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <div>
                             <?php
                             include("dbconn.php");
-                            $sql = "SELECT * FROM department";
-                            $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
-                            $row = mysqli_num_rows($query);
-
-                            $sql = "SELECT COUNT(department_id) FROM department";
-                            $result = mysqli_query($dbconn,$sql);
+                            $currentMonth = date('m');
+                            $currentYear = date('Y');
+                            $sql = "
+                            SELECT COUNT(a.applicant_id) 
+                            FROM applicant a
+                            JOIN application app ON a.applicant_id = app.applicant_id
+                            WHERE MONTH(app.app_date) = '$currentMonth' 
+                            AND YEAR(app.app_date) = '$currentYear' 
+                            AND app.app_status = 'Approved'";
+                            $result = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
                             $row = mysqli_fetch_array($result);
                             echo $row[0];
                             ?>
@@ -161,12 +165,12 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-red">
+        <div class="panel panel-yellow">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-sm-3">
@@ -177,12 +181,10 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <div>
                             <?php
                             include("dbconn.php");
-                            $sql = "SELECT * FROM department";
-                            $query = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
-                            $row = mysqli_num_rows($query);
-
-                            $sql = "SELECT COUNT(department_id) FROM department";
-                            $result = mysqli_query($dbconn,$sql);
+                            $currentMonth = date('m');
+                            $currentYear = date('Y');
+                            $sql = "SELECT COUNT(applicant_id) FROM applicant WHERE MONTH(applicant_start) = '$currentMonth' AND YEAR(applicant_start) = '$currentYear'";
+                            $result = mysqli_query($dbconn, $sql) or die("Error: " . mysqli_error($dbconn));
                             $row = mysqli_fetch_array($result);
                             echo $row[0];
                             ?>
@@ -195,8 +197,8 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
 </div>
