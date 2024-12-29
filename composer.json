@@ -1,0 +1,19 @@
+{
+    "config": {
+        "process-timeout": 2000
+    },
+    "require": {
+        "google/apiclient": "^2.15.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Google\\": "vendor/google/apiclient/src"
+        },
+        "classmap": ["vendor/google/apiclient/src"]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Google_Task_Composer::cleanup"
+        ]
+    }
+}

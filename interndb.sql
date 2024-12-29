@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2024 at 02:23 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Dec 29, 2024 at 01:07 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,18 +29,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` varchar(50) NOT NULL,
-  `admin_password` varchar(50) NOT NULL,
+  `admin_password` varchar(500) NOT NULL,
   `admin_name` varchar(50) NOT NULL,
   `admin_phoneNum` varchar(50) NOT NULL,
-  `admin_email` varchar(50) NOT NULL
+  `admin_email` varchar(50) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `reset_token_hash` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `reset_token_expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `admin_password`, `admin_name`, `admin_phoneNum`, `admin_email`) VALUES
-('admin_alain', 'adminalain02', 'Khadijah Saqifah', '0199507903', 'ain02@alaintesting');
+INSERT INTO `admin` (`admin_id`, `admin_password`, `admin_name`, `admin_phoneNum`, `admin_email`, `last_login`, `reset_token_hash`, `reset_token_expires_at`) VALUES
+('admin_alain', '$2y$10$hauXTJwvq/VQhSajc3wqy.HdxS9KccE0jBFjHxguzTObNPt3Cdwd2', 'Khadijah Saqifah', '0199507903', 'mfiq3142@gmail.com', '2024-12-29 07:45:46', 'd05464c8d61f1af65bff1d8683feb88d779ae5a6', '2024-12-29 00:56:41');
 
 -- --------------------------------------------------------
 
@@ -81,7 +84,9 @@ INSERT INTO `applicant` (`applicant_id`, `applicant_name`, `applicant_ic`, `appl
 (13, 'SALSABILLA BINTI SYAHED', '040513102564', 'bella@gmail.com', '01140345920', '2024-12-31', '2025-04-30', 'uploads/FRONT PAGE 264.pdf', 'uploads/front.pdf', 'admin_alain', 17, 1, 1),
 (14, 'NUR HIDAYAH BINTI AHMAD', '040513102564', 'dayah32@gmail.com', '0192930298', '2022-07-15', '2022-12-22', 'uploads/ittfront.pdf', 'uploads/ittfront.pdf', 'admin_alain', 13, 1, 4),
 (15, 'SITI HANNAN BINTI HAMDAN', '040513102564', 'hannan34@gmail.com', '0197357903', '2022-06-15', '2022-12-31', 'uploads/front.pdf', 'uploads/GanttChart.pdf', 'admin_alain', 14, 1, 1),
-(16, 'SITI HANNAN BINTI HAMDAN', '040513102564', 'hannan34@gmail.com', '0197357903', '2022-06-15', '2022-12-31', 'uploads/front.pdf', 'uploads/GanttChart.pdf', 'admin_alain', 14, 1, 1);
+(16, 'SITI HANNAN BINTI HAMDAN', '040513102564', 'hannan34@gmail.com', '0197357903', '2022-06-15', '2022-12-31', 'uploads/front.pdf', 'uploads/GanttChart.pdf', 'admin_alain', 14, 1, 1),
+(17, 'AMIRUL AFIQ BIN ZAKIR HAMDI', '010127141273', 'mfiq3142@gmail.com', '0197357903', '2024-12-10', '2024-12-11', 'uploads/Printed_Resume Amirul.pdf', 'uploads/Printed_Resume Amirul.pdf', 'admin_alain', 1, 1, 2),
+(18, 'dfsdf', '123213', 'mfiq3142@gmail.com', '2132', '2024-12-17', '2025-02-28', 'uploads/LEGAL ETHICS POINT OF VIEW.pdf', 'uploads/LEGAL ETHICS POINT OF VIEW.pdf', 'admin_alain', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -94,27 +99,30 @@ CREATE TABLE `application` (
   `applicant_id` int(11) NOT NULL,
   `department_id` int(11) NOT NULL,
   `app_date` date NOT NULL,
-  `app_status` enum('Pending','Approved','Rejected') DEFAULT 'Pending'
+  `app_status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `meeting_scheduled` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `application`
 --
 
-INSERT INTO `application` (`app_id`, `applicant_id`, `department_id`, `app_date`, `app_status`) VALUES
-(1, 4, 1, '2020-09-17', 'Rejected'),
-(2, 5, 3, '2020-12-09', 'Approved'),
-(3, 6, 3, '2020-10-26', 'Pending'),
-(4, 7, 3, '2020-02-16', 'Pending'),
-(5, 8, 3, '2020-04-10', 'Pending'),
-(6, 9, 3, '2020-05-09', 'Pending'),
-(7, 10, 1, '2024-12-09', 'Pending'),
-(8, 11, 2, '2024-12-09', 'Pending'),
-(9, 12, 2, '2024-12-09', 'Pending'),
-(10, 13, 1, '2024-12-09', 'Pending'),
-(11, 14, 4, '2024-12-10', 'Pending'),
-(12, 15, 1, '2024-12-10', 'Pending'),
-(13, 16, 1, '2024-12-10', 'Pending');
+INSERT INTO `application` (`app_id`, `applicant_id`, `department_id`, `app_date`, `app_status`, `meeting_scheduled`) VALUES
+(1, 4, 1, '2020-09-17', 'Approved', 0),
+(2, 5, 3, '2020-12-09', 'Approved', 1),
+(3, 6, 3, '2020-10-26', 'Approved', 0),
+(4, 7, 3, '2020-02-16', 'Approved', 0),
+(5, 8, 3, '2020-04-10', 'Pending', 0),
+(6, 9, 3, '2020-05-09', 'Pending', 0),
+(7, 10, 1, '2024-12-09', 'Approved', 0),
+(8, 11, 2, '2024-12-09', 'Approved', 0),
+(9, 12, 2, '2024-12-09', 'Pending', 0),
+(10, 13, 1, '2024-12-09', 'Pending', 0),
+(11, 14, 4, '2024-12-10', 'Pending', 0),
+(12, 15, 1, '2024-12-10', 'Pending', 0),
+(13, 16, 1, '2024-12-10', 'Pending', 0),
+(14, 17, 2, '2024-12-15', 'Rejected', 0),
+(15, 18, 1, '2024-12-18', 'Approved', 1);
 
 -- --------------------------------------------------------
 
@@ -126,18 +134,22 @@ CREATE TABLE `department` (
   `department_id` int(11) NOT NULL,
   `department_name` varchar(50) NOT NULL,
   `department_desc` varchar(1000) NOT NULL,
-  `department_image` varchar(255) NOT NULL
+  `department_image` varchar(255) NOT NULL,
+  `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`department_id`, `department_name`, `department_desc`, `department_image`) VALUES
-(1, 'Human Resources', 'officee', 'gambar'),
-(2, 'Finance', 'kira kira', 'duit'),
-(3, 'Testing', 'review document', 'laptop'),
-(4, 'Development', 'coding je keje', 'PC');
+INSERT INTO `department` (`department_id`, `department_name`, `department_desc`, `department_image`, `deleted`) VALUES
+(1, 'Human Resources', 'officee', 'gambar', 0),
+(2, 'Finance', 'kira kira', 'duit', 0),
+(3, 'Testing', 'review document', 'laptop', 0),
+(4, 'Development', 'coding je keje', 'PC', 0),
+(5, 'ICT', 'Tecnology and others related ', 'image/Bright and Modern Slide Deck Brand Presentation (4).png', 1),
+(6, 'ICT', 'Tecnology and others related ', 'image/Bright and Modern Slide Deck Brand Presentation (4).png', 1),
+(7, 'apa', 'apa', 'image/maxim-berg-Ac02zYZs22Y-unsplash.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -203,7 +215,9 @@ INSERT INTO `university` (`uni_id`, `uni_name`) VALUES
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`admin_id`);
+  ADD PRIMARY KEY (`admin_id`),
+  ADD UNIQUE KEY `admin_email` (`admin_email`),
+  ADD UNIQUE KEY `reset_token_hash` (`reset_token_hash`);
 
 --
 -- Indexes for table `applicant`
@@ -249,19 +263,19 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `applicant`
 --
 ALTER TABLE `applicant`
-  MODIFY `applicant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `applicant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `application`
 --
 ALTER TABLE `application`
-  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `program`

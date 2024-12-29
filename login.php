@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $error_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,33 +9,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordDB = "";
     $dbname = "interndb";
 
-    $dbconn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
-
-    if ($dbconn->connect_error) {
-        die("Connection failed: " . $dbconn->connect_error);
+    try {
+        $dbconn = new PDO("mysql:host=$servername;dbname=$dbname", $usernameDB, $passwordDB);
+        $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        throw new Exception("Connection failed: " . $e->getMessage());
     }
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $admin_id = trim($_POST['admin_id']);
+    $admin_password = trim($_POST['admin_password']);
 
     // Check if user is an admin
-    $stmt = $dbconn->prepare("SELECT * FROM admin WHERE admin_id = ? AND admin_password = ?");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt = $dbconn->prepare("SELECT * FROM admin WHERE admin_id = :admin_id");
+    $stmt->bindParam(':admin_id', $admin_id);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $_SESSION['admin_id'] = $user['admin_id'];
-        $_SESSION['user_role'] = 'admin';
-        header("Location: dashboard.php");
-        exit();
+    if ($user) {
+        $stored_password = $user["admin_password"];
+        
+        if (password_verify($admin_password, $stored_password)) {
+            // Login successful
+            $_SESSION['admin_id'] = $user['admin_id'];
+            $_SESSION['user_role'] = 'admin';
+            
+            // Update last login timestamp
+            $update_stmt = $dbconn->prepare("UPDATE admin SET last_login = NOW() WHERE admin_id = :admin_id");
+            $update_stmt->execute(['admin_id' => $admin_id]);
+            
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            error_log("Failed login attempt for admin_id: " . $admin_id);
+            $error_message = "Invalid admin ID or password";
+        }
+    } else {
+        $error_message = "Invalid admin ID or password";
     }
-    
-    $error_message = "Invalid username or password";
 
-    $stmt->close();
-    $dbconn->close();
+    // Unset the statement and connection
+    $stmt = null;
+    $dbconn = null;
 }
 ?>
 
@@ -249,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="bg">
     <header>
-        <a href="#" class="logo"><img src= "logo.png" alt="logo alain"> </a>
+        <a href="#" class="logo"><img src="logo.png" alt="logo alain"></a>
         <nav class="navbar">
             <a href="#">Services</a>
             <a href="#">Solutions</a>
@@ -260,23 +270,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <div class="center-text">Login</div>
     <section>
-        
         <div class="form-box">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                 <div class="inputbox">
-                    <input type="text" name="username" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" required="required">
-                    <label for="username">Username</label>
+                <input type="username" name="admin_id" required="required">
+                    <label for="admin_id">Admin ID</label>
                 </div>
                 <div class="inputbox">
-                    <input type="password" name="password" required="required">
-                    <label for="password">Password</label>
+                    <input type="password" name="admin_password" required="required">
+                    <label for="admin_password">Password</label>
                 </div>
                 <button type="submit">Login</button>
                 <?php if ($error_message): ?>
                     <div class="error-message"><?php echo $error_message; ?></div>
                 <?php endif; ?>
                 <div class="forgot">
-                    <p>Forgot Password? <a href="RegisterReal.php"></a></p>
+                    <p>Forgot Password? <a href="forgot-password.php">Click here</a></p>
                 </div>
             </form>
         </div>

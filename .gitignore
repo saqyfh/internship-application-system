@@ -1,0 +1,10 @@
+# Ignore credential files
+credentials/*.json
+token.json
+
+# Other common files to ignore
+.env
+vendor/
+node_modules/
+*.log
+.DS_Store

@@ -1,3 +1,10 @@
+<?php
+// Start output buffering at the very beginning
+ob_start();
+
+// Move any PHP logic/checks here before any HTML output
+?>
+
 <style>
 /****** START ADMIN NAVBAR *****/
 
@@ -238,6 +245,10 @@
 }
 /**** END ADMIN NAVBAR  ***/
 </style> 
+
+<?php
+ob_end_flush();
+?>
     
     <!-- ADMIN NAVBAR HEADER -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=notifications" />

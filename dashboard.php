@@ -139,7 +139,7 @@ $labelsJSON = json_encode(array_keys($data)); // Status labels
                         <i class="fas fa-user fa-4x"></i>
                     </div>
                     <div class="col-sm-9 text-right">
-                        <div>Joining This Month</div>
+                        <div>Interview This Month</div>
                         <div>
                             <?php
                             include("dbconn.php");
